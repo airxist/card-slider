@@ -1,35 +1,49 @@
+// Without using mouse movement X and 
+
 // selected elements
-const container = document.getElementById("container");
 const slider = document.getElementById("slider");
-const images = document.getElementsByClassName("image");
 
 
 let dragging = false;
 let pos = 0;
+let diff = 0;
 
+// mouse events
+slider.addEventListener('mousedown', (e) => {
+dragging = true;
+console.log(e);
+pos = e.clientX;
+e.currentTarget.style.cursor = 'grabbing';
+})
 
-function switchDragging(value) {
-  dragging = value;
-}
+slider.addEventListener('mouseup', (e) => {
+  dragging = false;
+  e.currentTarget.style.cursor = 'grab';
+})
 
-container.addEventListener("mousedown", (e) => {
-  e.currentTarget.style.cursor = 'grabbing'
-  switchDragging(true);
-});
-
-container.addEventListener("mouseup" || "mouseleave", (e) => {
-  switchDragging(false);
-});
-
-container.addEventListener("mousemove", (e) => {
-  const element = e.currentTarget;
-  const scrollLength = element.scrollWidth - element.clientWidth;
+slider.addEventListener('mousemove', (e) => {
   if (!dragging) return;
-  pos += -e.movementX;
-  if (pos > scrollLength) {
-    pos = scrollLength;
-  } else if (pos < 0) {
-    pos = 0;
-  }
-  element.scrollLeft = pos;
-});
+  diff = pos - e.clientX ;
+  e.currentTarget.scrollLeft += diff;
+})
+
+// touch events
+slider.addEventListener('touchstart', (e) => {
+dragging = true;
+console.log(e);
+pos = e.touches[0].clientX;
+e.currentTarget.style.cursor = 'grabbing';
+})
+
+slider.addEventListener('touchend', (e) => {
+  dragging = false;
+  e.currentTarget.style.cursor = 'grab';
+})
+
+slider.addEventListener('touchmove', (e) => {
+  if (!dragging) return;
+  diff = pos - e.touches[0].clientX  ||  e.clientX ;
+  e.currentTarget.scrollLeft += diff;
+})
+
+
