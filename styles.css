@@ -22,10 +22,16 @@ body {
   background-color: rgb(54, 54, 51);
   width: 70vw;
   text-wrap: nowrap;
-  overflow: auto;
+  overflow-x: auto;
   cursor: grab;
   padding: 5px 0;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
 }
 
 .image {
@@ -39,7 +45,7 @@ body {
   user-select: none;
   overflow: hidden;
   margin-left: 10px;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
 }
 
 .image img {
